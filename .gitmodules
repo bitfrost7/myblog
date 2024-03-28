@@ -1,3 +1,9 @@
 [submodule "public"]
 	path = public
 	url = git@github.com:bitfrost7/bitfrost7.github.io.git
+[submodule "themes/hugo-theme-stack"]
+	path = themes/hugo-theme-stack
+	url = https://github.com/CaiJimmy/hugo-theme-stack/
+[submodule "themes/themes/hugo-theme-stack"]
+	path = themes/themes/hugo-theme-stack
+	url = https://github.com/CaiJimmy/hugo-theme-stack/
