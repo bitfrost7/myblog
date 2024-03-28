@@ -2,7 +2,7 @@ baseurl: https://bitfrost7.github.io/
 languageCode: zh-cn
 theme: hugo-theme-stack
 paginate: 3
-title: Hello World
+title: Bitfrost7
 copyright: Example Person
 
 # Theme i18n support
