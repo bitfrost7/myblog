@@ -2,15 +2,14 @@
 
 hugo -D
 
-git config --global core.autocrlf true
-git remote add origin git@github.com:bitfrost7/myblog.git
+# 编译部署 博客源文件
 git add .
 git commit -m "update"
 git push origin master
+hugo -D
 
+# 发布到github pages
 cd public
-git config --global core.autocrlf true
-git remote add origin git@github.com:bitfrost7/bitfrost7.github.io.git
 git add .
 git commit -m "update"
 git push origin master
