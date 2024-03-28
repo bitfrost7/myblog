@@ -20,8 +20,8 @@ for theme in "${themes[@]}"; do
 done
 
 # 编译Hugo网站
-hugo .
+hugo -D
 
 # 发布
-cd public && git remote add git@github.com:bitfrost7/bitfrost7.github.io.git > /dev/null 2>&1
+cd public && git remote add origin git@github.com:bitfrost7/bitfrost7.github.io.git > /dev/null 2>&1
 git add .  && git commit -m "update" && git push origin master > /dev/null 2>&1
