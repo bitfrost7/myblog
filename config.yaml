@@ -186,13 +186,12 @@ params:
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
     main: []
-
-#    social:
-#        - identifier: github
-#          name: GitHub
-#          url: https://github.com/bitfrost7
-#          params:
-#              icon: brand-github
+    social:
+        - identifier: github
+          name: GitHub
+          url: https://github.com/bitfrost7
+          params:
+              icon: brand-github
 
 related:
     includeNewer: true
@@ -222,3 +221,9 @@ markup:
         lineNos: true
         lineNumbersInTable: true
         tabWidth: 4
+buildFuture: true
+frontmatter:
+    lastmod: [":git", "lastmod", ":fileModTime", ":defalut"]
+
+enableGitInfo: true
+gitRepo: "https://github.com/iwyang/hugo"

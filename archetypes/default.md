@@ -1,12 +1,13 @@
 ---
-title: "{{ replace .Name "-" " " | title }}"
+title: "{{ replace .TranslationBaseName "-" " " | title }}"
+slug: ""
+description: ""
 date: {{ .Date }}
-draft: true
-menu:
-  main:
-    name: title (optional)
-    weight: -90
-    params:
-      icon: icon-name
+lastmod: {{ .Date }}
+draft: false
+toc: true
+weight: false
+image: ""
+categories: [""]
+tags: [""]
 ---
-
