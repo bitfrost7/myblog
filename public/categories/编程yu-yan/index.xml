@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>编程yu Yan on 些许风霜</title>
+        <link>http://localhost:1313/categories/%E7%BC%96%E7%A8%8Byu-yan/</link>
+        <description>Recent content in 编程yu Yan on 些许风霜</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>bitfrost</copyright>
+        <lastBuildDate>Fri, 29 Mar 2024 16:40:30 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E7%BC%96%E7%A8%8Byu-yan/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Golang学习-切片</title>
+        <link>http://localhost:1313/p/golang/slice/</link>
+        <pubDate>Fri, 29 Mar 2024 16:40:30 +0800</pubDate>
+        
+        <guid>http://localhost:1313/p/golang/slice/</guid>
+        <description>&lt;h2 id=&#34;切片&#34;&gt;
+    &lt;a href=&#34;#%e5%88%87%e7%89%87&#34;&gt;#&lt;/a&gt;
+    切片
+&lt;/h2&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本文介绍了Go中变量，关键字以及常用控制语句">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简单介绍Go中25个关键字及其语法">
 <title>Golang学习-关键字</title>
 
-<link rel='canonical' href='http://localhost:1313/p/golang/'>
+<link rel='canonical' href='https://bitfrost7.github.io/p/golang/'>
 
 <link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="Golang学习-关键字">
-<meta property='og:description' content="本文介绍了Go中变量，关键字以及常用控制语句">
-<meta property='og:url' content='http://localhost:1313/p/golang/'>
+<meta property='og:description' content="简单介绍Go中25个关键字及其语法">
+<meta property='og:url' content='https://bitfrost7.github.io/p/golang/'>
 <meta property='og:site_name' content='些许风霜'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Golang' /><meta property='article:published_time' content='2024-03-29T15:54:28&#43;08:00'/><meta property='article:modified_time' content='2024-03-29T15:54:28&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='golang' /><meta property='article:published_time' content='2024-03-29T15:54:28&#43;08:00'/><meta property='article:modified_time' content='2024-03-29T15:54:28&#43;08:00'/>
 <meta name="twitter:title" content="Golang学习-关键字">
-<meta name="twitter:description" content="本文介绍了Go中变量，关键字以及常用控制语句">
+<meta name="twitter:description" content="简单介绍Go中25个关键字及其语法">
     </head>
     <body class="
     article-page
@@ -261,7 +261,14 @@
             <li><a href="#struct">struct</a></li>
             <li><a href="#type">type</a></li>
             <li><a href="#var">var</a></li>
+          </ol>
+        </li>
+        <li><a href="#程序流程控制15个">程序流程控制（15个）：</a>
+          <ol>
             <li><a href="#循环">循环</a></li>
+            <li><a href="#条件语句">条件语句</a></li>
+            <li><a href="#跳转控制">跳转控制</a></li>
+            <li><a href="#并发控制">并发控制</a></li>
           </ol>
         </li>
       </ol>
@@ -289,7 +296,7 @@
     
         
         <h3 class="article-subtitle">
-            本文介绍了Go中变量，关键字以及常用控制语句
+            简单介绍Go中25个关键字及其语法
         </h3>
         
     </div>
@@ -428,15 +435,14 @@
 <h4 id="var">
     <a href="#var">#</a>
     var
-</h4><p>var 用于申明函数级变量和包级变量。
-程序流程控制（15个）：</p>
-<h4 id="循环">
+</h4><p>var 用于申明函数级变量和包级变量。</p>
+<h3 id="程序流程控制15个">
+    <a href="#%e7%a8%8b%e5%ba%8f%e6%b5%81%e7%a8%8b%e6%8e%a7%e5%88%b615%e4%b8%aa">#</a>
+    程序流程控制（15个）：
+</h3><h4 id="循环">
     <a href="#%e5%be%aa%e7%8e%af">#</a>
     循环
-</h4><ul>
-<li>
-<p>for range
-for 是 Go 中唯一用于循环结构的关键词, 有三种使用方式：1. 单条件 2. 循环变量 3 range</p>
+</h4><p>for 是 Go 中唯一用于循环结构的关键词, 有三种使用方式：1. 单条件 2. 循环变量 3 range</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -459,23 +465,23 @@ for 是 Go 中唯一用于循环结构的关键词, 有三种使用方式：1. �
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// for 单条件用法 相当于while
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nx">i</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">i</span><span class="o">++</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// for 循环变量
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// for range 用法
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">s</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></li>
-<li>
-<p>break continue</p>
+</div><ul>
+<li><code>break</code> <code>continue</code></li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -496,60 +502,94 @@ for 是 Go 中唯一用于循环结构的关键词, 有三种使用方式：1. �
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// break 跳出本次循环
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">5</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">break</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">5</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// continue 跳过本次循环
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">5</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">continue</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">5</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>条件语句</p>
-</li>
+</div><h4 id="条件语句">
+    <a href="#%e6%9d%a1%e4%bb%b6%e8%af%ad%e5%8f%a5">#</a>
+    条件语句
+</h4><ul>
+<li><code>if</code> <code>else</code> <code>else if</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i == 1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i == 2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i != 1 &amp;&amp; i != 2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>
-<p>if else else if
-if i == 1 {
-fmt.Println(&ldquo;i == 1&rdquo;)
-} else if i == 2 {
-fmt.Println(&ldquo;i == 2&rdquo;)
-} else {
-fmt.Println(&ldquo;i != 1 &amp;&amp; i != 2&rdquo;)
-}</p>
-</li>
-<li>
-<p>switch default case
-switch i {
-case 1:
-fmt.Println(&ldquo;i == 1&rdquo;)
-case 2:
-fmt.Println(&ldquo;i == 2&rdquo;)
-default:
-fmt.Println(&ldquo;i != 1 &amp;&amp; i != 2&rdquo;)
-}
-跳转控制</p>
-</li>
-<li>
-<p>return</p>
-</li>
-<li>
-<p>defer</p>
-</li>
-<li>
-<p>goto
-并发控制</p>
-</li>
-<li>
-<p>go</p>
-</li>
-<li>
-<p>select</p>
-</li>
+<p><code>switch</code> <code>default</code> <code>case</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">switch</span> <span class="nx">i</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i == 1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i == 2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i != 1 &amp;&amp; i != 2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="跳转控制">
+    <a href="#%e8%b7%b3%e8%bd%ac%e6%8e%a7%e5%88%b6">#</a>
+    跳转控制
+</h4><ul>
+<li><code>return</code></li>
+</ul>
+<p>Go中一个函数可以有一个或者多个返回值，返回值通过return指定。</p>
+<ol>
+<li>return关键字中指定了参数时，返回值可以不用名称。如果return省略参数，则返回值部分必须带名称，当返回值带有名称时，必须使用<code>()</code>包起来</li>
+<li>在一个函数块里，任何在return之后的代码都不会执行</li>
+</ol>
+<ul>
+<li><code>defer</code></li>
+<li><code>goto</code></li>
+</ul>
+<h4 id="并发控制">
+    <a href="#%e5%b9%b6%e5%8f%91%e6%8e%a7%e5%88%b6">#</a>
+    并发控制
+</h4><ul>
+<li><code>go</code></li>
+<li><code>select</code></li>
 </ul>
 
 </section>
@@ -585,6 +625,54 @@ fmt.Println(&ldquo;i != 1 &amp;&amp; i != 2&rdquo;)
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/golang/string/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang学习-字符串</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/golang/type/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang学习-基础数据类型</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/golang/slice/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang学习-数组和切片</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     
