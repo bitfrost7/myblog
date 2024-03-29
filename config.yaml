@@ -5,14 +5,9 @@ paginate: 5
 title: hello world
 copyright: bitfrost
 
-# Theme i18n support
-# Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
 DefaultContentLanguage: zh-cn
 
-# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
-# This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage: false
-
+hasCJKLanguage: true
 languages:
     zh-cn:
         languageName: 中文
@@ -22,10 +17,8 @@ languages:
             description: 演示说明
 
 services:
-    # Change it to your Disqus shortname before using
     disqus:
         shortname: "hugo-theme-stack"
-    # GA Tracking ID
     googleAnalytics:
         id:
 
@@ -42,7 +35,7 @@ params:
 
     footer:
         since: 2023
-        customText: "学习记录"
+        customText: "记录点滴"
 
     dateFormat:
         published: Jan 02, 2006
@@ -64,7 +57,7 @@ params:
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: true
+        enabled: false
         provider: disqus
 
         disqusjs:
@@ -162,18 +155,18 @@ params:
             - type: toc
 
     opengraph:
-        twitter:
+#        twitter:
             # Your Twitter username
-            site:
+#            site:
 
             # Available values: summary, summary_large_image
-            card: summary_large_image
+#            card: summary_large_image
 
-    defaultImage:
-        opengraph:
-            enabled: false
-            local: false
-            src:
+#    defaultImage:
+#        opengraph:
+#            enabled: false
+#            local: false
+#            src:
 
     colorScheme:
         # Display toggle
@@ -194,18 +187,12 @@ params:
 menu:
     main: []
 
-    social:
-        - identifier: github
-          name: GitHub
-          url: https://github.com/CaiJimmy/hugo-theme-stack
-          params:
-              icon: brand-github
-
-        - identifier: twitter
-          name: Twitter
-          url: https://twitter.com
-          params:
-              icon: brand-twitter
+#    social:
+#        - identifier: github
+#          name: GitHub
+#          url: https://github.com/bitfrost7
+#          params:
+#              icon: brand-github
 
 related:
     includeNewer: true
