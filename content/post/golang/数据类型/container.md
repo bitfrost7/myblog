@@ -35,7 +35,7 @@ type List struct {
   len  int     // current list length excluding (this) sentinel element
 }
 ```
-### List常用a
+### List常用api
 
 | 名称           | 函数参数                     | 作用         |
 | ------------ | ------------------------ | ---------- |
