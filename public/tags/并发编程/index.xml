@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>并发编程 on 些许风霜</title>
+        <link>https://bitfrost7.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+        <description>Recent content in 并发编程 on 些许风霜</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>bitfrost</copyright>
+        <lastBuildDate>Tue, 02 Apr 2024 17:32:17 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Golang学习- context使用</title>
+        <link>https://bitfrost7.github.io/p/golang/context/</link>
+        <pubDate>Tue, 02 Apr 2024 17:32:17 +0800</pubDate>
+        
+        <guid>https://bitfrost7.github.io/p/golang/context/</guid>
+        <description>&lt;h2 id=&#34;context介绍&#34;&gt;
+    &lt;a href=&#34;#context%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
+    Context介绍
+&lt;/h2&gt;&lt;p&gt;在Go的并发控制中，经常会需要用到父协程和子协程进行通信或者控制，比如说控制协程结束，超时控制，参数传递等场景。与之对应的，context.Context提供了 BackGround，WithCancel，WithTimeout ，WithValue 四种 context。&lt;/p&gt;
+&lt;h3 id=&#34;功能介绍&#34;&gt;
+    &lt;a href=&#34;#%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
+    功能介绍：
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;BackGround，所有context的root，其他context都应该从它继承。&lt;/li&gt;
+&lt;li&gt;WithCancel，基于父context创建一个可取消的context，当 cancelFunc() 被调用时，所有监听ctx.Done()的接收者都会立刻解除阻塞，并且同时会递归的取消所有子context。&lt;/li&gt;
+&lt;li&gt;WithTimeout ，基于父context创建一个带有定时器的context，同样也会返回cancelFunc来显式取消&lt;/li&gt;
+&lt;li&gt;WithValue，基于父context创建一个带有kv对的context，并且可以继承父context的所有，包括kv对，定时器以及cancelFunc，子context可以对父context的kv对进行修改。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
