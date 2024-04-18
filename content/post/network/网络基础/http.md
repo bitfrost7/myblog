@@ -22,7 +22,7 @@ tags: ["HTTP"]
 #### 响应报文
 - 状态行和状态码
 - 首部行
-## HTTPS协议
+## HTTPS加密
 ## Cookie和Session
 ## WEB缓存代理和HTTP网关
 ## 基于HTTP补充的协议
