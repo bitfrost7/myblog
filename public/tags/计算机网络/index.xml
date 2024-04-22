@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>计算机网络 on 些许风霜</title>
+        <link>https://bitfrost7.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+        <description>Recent content in 计算机网络 on 些许风霜</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>bitfrost</copyright>
+        <lastBuildDate>Thu, 18 Apr 2024 10:34:34 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机网络-简介</title>
+        <link>https://bitfrost7.github.io/p/network/introduction/</link>
+        <pubDate>Thu, 18 Apr 2024 10:34:34 +0800</pubDate>
+        
+        <guid>https://bitfrost7.github.io/p/network/introduction/</guid>
+        <description>&lt;h1 id=&#34;计算机网络&#34;&gt;
+    &lt;a href=&#34;#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c&#34;&gt;#&lt;/a&gt;
+    计算机网络
+&lt;/h1&gt;&lt;p&gt;计算机网络（Computer Network）是指将多台计算机和其他网络设备连接起来，使它们能够相互通信和共享资源的系统。&lt;/p&gt;
+&lt;h2 id=&#34;什么是internet&#34;&gt;
+    &lt;a href=&#34;#%e4%bb%80%e4%b9%88%e6%98%afinternet&#34;&gt;#&lt;/a&gt;
+    什么是Internet？
+&lt;/h2&gt;&lt;p&gt;因特网是一个世界范围的计算机网络，它是一个互联了遍及全世界数十亿计算设备的网络，可以说是世界上最大的一个计算机网络。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;端系统&lt;br&gt;
+通常将和Internet相连的这些主机，叫做&lt;strong&gt;端系统&lt;/strong&gt;（End System），可能是一台PC，也可能是一部手机，也可能是一台服务器。端系统分为两类：客户
+(client)和服务器(server)。&lt;br&gt;
+客户端一般是使用互联网服务的用户，而服务器通常是提供服务的机器，通常性能更为强大，部署在数据中心IDC（data center），
+数据中心往往有着更为复杂的网络架构。&lt;/li&gt;
+&lt;li&gt;路由器&lt;br&gt;
+&lt;strong&gt;路由器&lt;/strong&gt;（Routers）是Internet的核心组件，负责在网络间转发数据包。通俗的来讲，路由器就像高速公路上的路牌，指示了车辆该往哪个方向走。
+路由器依据数据包的IP地址和路由表决定数据包的最佳路径，并在不同网络之间执行数据包交换。&lt;/li&gt;
+&lt;li&gt;交换机&lt;br&gt;
+&lt;strong&gt;交换机&lt;/strong&gt;（Switch）是计算机网络中用于连接多台计算机和其他网络设备的网络设备，负责在局域网（LAN）中实现数据包的转发和交换，从而实现设备之间的通信。
+可以将交换机理解为就像环线路口连接了多条道路，任一驶入路口的车辆能根据自己的目的地选择出口，交换机也连接了多台计算机和网络设备，可以选择性地将数据包转发到特定的端口完成通信。&lt;/li&gt;
+&lt;li&gt;ISP&lt;br&gt;
+&lt;strong&gt;ISP&lt;/strong&gt;指的是互联网服务提供商（Internet Service Provider），是指向个人、家庭、企业等提供互联网接入服务的公司或组织。每个ISP自身就是一个由多台分组交换机和多段通信链路组成的网络。
+ISP分为地区ISP，在某一个城市提供接入服务；国家级ISP，比如中国联通；全球ISP，在全球范围内提供互联网接入服务的大型ISP，例如AT&amp;amp;T。
+无论那种ISP都是一个独立的网络，较高级ISP都是通过高速光纤链路互联起来。&lt;/li&gt;
+&lt;li&gt;协议&lt;br&gt;
+想象一下，当你和朋友聊天时，你们会遵循一定的语言规则（比如英语或中文的语法规则），确定谁先说话、说什么内容、怎样说才能确保对方理解。在网络世界中，设备之间的沟通同样需要这样的规则。
+所谓协议，其实就是一系列规定好的语法，语义，时序，按照这样的规则，让通信双方都能理解。&lt;strong&gt;网络协议&lt;/strong&gt; (protocol) 定义了在两个或多个通信实体之间交换的报文的格式和顺序，以及报文发送和/或接收一条报文或其他事件所采取的动作。&lt;/li&gt;
+&lt;li&gt;因特网标准和RFC文档
+对于互联网通信，一个规范且通用的协议十分重要，因特网工程任务组(Internet Engineering Task Force, IETF )制定了一系列通信标准，并且这个标准也开放在互联网上，被称为 &lt;strong&gt;请求评论&lt;/strong&gt;（Request For Comment, RFC）。
+例如RFC 894 定义了如何在以太网帧格式上封装IP数据报。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;internet是怎么工作的&#34;&gt;
+    &lt;a href=&#34;#internet%e6%98%af%e6%80%8e%e4%b9%88%e5%b7%a5%e4%bd%9c%e7%9a%84&#34;&gt;#&lt;/a&gt;
+    Internet是怎么工作的？
+&lt;/h2&gt;&lt;h3 id=&#34;接入网&#34;&gt;
+    &lt;a href=&#34;#%e6%8e%a5%e5%85%a5%e7%bd%91&#34;&gt;#&lt;/a&gt;
+    接入网
+&lt;/h3&gt;&lt;h3 id=&#34;核心网&#34;&gt;
+    &lt;a href=&#34;#%e6%a0%b8%e5%bf%83%e7%bd%91&#34;&gt;#&lt;/a&gt;
+    核心网
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;分组交换&lt;/li&gt;
+&lt;li&gt;电路交换&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;分层网络体系&#34;&gt;
+    &lt;a href=&#34;#%e5%88%86%e5%b1%82%e7%bd%91%e7%bb%9c%e4%bd%93%e7%b3%bb&#34;&gt;#&lt;/a&gt;
+    分层网络体系
+&lt;/h3&gt;&lt;h4 id=&#34;应用模型&#34;&gt;
+    &lt;a href=&#34;#%e5%ba%94%e7%94%a8%e6%a8%a1%e5%9e%8b&#34;&gt;#&lt;/a&gt;
+    应用模型
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;应用层&lt;/li&gt;
+&lt;li&gt;运输层&lt;/li&gt;
+&lt;li&gt;网络层&lt;/li&gt;
+&lt;li&gt;链路层&lt;/li&gt;
+&lt;li&gt;物理层&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;osi模型&#34;&gt;
+    &lt;a href=&#34;#osi%e6%a8%a1%e5%9e%8b&#34;&gt;#&lt;/a&gt;
+    OSI模型
+&lt;/h4&gt;&lt;h4 id=&#34;封装分组卸载组装&#34;&gt;
+    &lt;a href=&#34;#%e5%b0%81%e8%a3%85%e5%88%86%e7%bb%84%e5%8d%b8%e8%bd%bd%e7%bb%84%e8%a3%85&#34;&gt;#&lt;/a&gt;
+    封装，分组，卸载，组装
+&lt;/h4&gt;&lt;h2 id=&#34;internet发展和前景&#34;&gt;
+    &lt;a href=&#34;#internet%e5%8f%91%e5%b1%95%e5%92%8c%e5%89%8d%e6%99%af&#34;&gt;#&lt;/a&gt;
+    Internet发展和前景
+&lt;/h2&gt;&lt;h3 id=&#34;历史&#34;&gt;
+    &lt;a href=&#34;#%e5%8e%86%e5%8f%b2&#34;&gt;#&lt;/a&gt;
+    历史
+&lt;/h3&gt;&lt;h3 id=&#34;网络攻击&#34;&gt;
+    &lt;a href=&#34;#%e7%bd%91%e7%bb%9c%e6%94%bb%e5%87%bb&#34;&gt;#&lt;/a&gt;
+    网络攻击
+&lt;/h3&gt;&lt;h3 id=&#34;前景&#34;&gt;
+    &lt;a href=&#34;#%e5%89%8d%e6%99%af&#34;&gt;#&lt;/a&gt;
+    前景
+&lt;/h3&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

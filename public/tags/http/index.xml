@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>HTTP on 些许风霜</title>
+        <link>https://bitfrost7.github.io/tags/http/</link>
+        <description>Recent content in HTTP on 些许风霜</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>bitfrost</copyright>
+        <lastBuildDate>Thu, 18 Apr 2024 14:50:50 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/tags/http/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机网络-HTTP协议</title>
+        <link>https://bitfrost7.github.io/p/network/http/</link>
+        <pubDate>Thu, 18 Apr 2024 14:50:50 +0800</pubDate>
+        
+        <guid>https://bitfrost7.github.io/p/network/http/</guid>
+        <description>&lt;h1 id=&#34;http协议&#34;&gt;
+    &lt;a href=&#34;#http%e5%8d%8f%e8%ae%ae&#34;&gt;#&lt;/a&gt;
+    HTTP协议
+&lt;/h1&gt;&lt;h2 id=&#34;什么是http&#34;&gt;
+    &lt;a href=&#34;#%e4%bb%80%e4%b9%88%e6%98%afhttp&#34;&gt;#&lt;/a&gt;
+    什么是HTTP？
+&lt;/h2&gt;&lt;h3 id=&#34;持续连接&#34;&gt;
+    &lt;a href=&#34;#%e6%8c%81%e7%bb%ad%e8%bf%9e%e6%8e%a5&#34;&gt;#&lt;/a&gt;
+    持续连接
+&lt;/h3&gt;&lt;h3 id=&#34;非持续连接&#34;&gt;
+    &lt;a href=&#34;#%e9%9d%9e%e6%8c%81%e7%bb%ad%e8%bf%9e%e6%8e%a5&#34;&gt;#&lt;/a&gt;
+    非持续连接
+&lt;/h3&gt;&lt;h3 id=&#34;http报文格式&#34;&gt;
+    &lt;a href=&#34;#http%e6%8a%a5%e6%96%87%e6%a0%bc%e5%bc%8f&#34;&gt;#&lt;/a&gt;
+    HTTP报文格式
+&lt;/h3&gt;&lt;h4 id=&#34;请求报文&#34;&gt;
+    &lt;a href=&#34;#%e8%af%b7%e6%b1%82%e6%8a%a5%e6%96%87&#34;&gt;#&lt;/a&gt;
+    请求报文
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;请求行&lt;/li&gt;
+&lt;li&gt;请求头&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;响应报文&#34;&gt;
+    &lt;a href=&#34;#%e5%93%8d%e5%ba%94%e6%8a%a5%e6%96%87&#34;&gt;#&lt;/a&gt;
+    响应报文
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;状态行和状态码&lt;/li&gt;
+&lt;li&gt;首部行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;http发展&#34;&gt;
+    &lt;a href=&#34;#http%e5%8f%91%e5%b1%95&#34;&gt;#&lt;/a&gt;
+    HTTP发展
+&lt;/h2&gt;&lt;h2 id=&#34;https加密&#34;&gt;
+    &lt;a href=&#34;#https%e5%8a%a0%e5%af%86&#34;&gt;#&lt;/a&gt;
+    HTTPS加密
+&lt;/h2&gt;&lt;h2 id=&#34;cookie和session&#34;&gt;
+    &lt;a href=&#34;#cookie%e5%92%8csession&#34;&gt;#&lt;/a&gt;
+    Cookie和Session
+&lt;/h2&gt;&lt;h2 id=&#34;web缓存代理和http网关&#34;&gt;
+    &lt;a href=&#34;#web%e7%bc%93%e5%ad%98%e4%bb%a3%e7%90%86%e5%92%8chttp%e7%bd%91%e5%85%b3&#34;&gt;#&lt;/a&gt;
+    WEB缓存代理和HTTP网关
+&lt;/h2&gt;&lt;h2 id=&#34;基于http补充的协议&#34;&gt;
+    &lt;a href=&#34;#%e5%9f%ba%e4%ba%8ehttp%e8%a1%a5%e5%85%85%e7%9a%84%e5%8d%8f%e8%ae%ae&#34;&gt;#&lt;/a&gt;
+    基于HTTP补充的协议
+&lt;/h2&gt;&lt;h2 id=&#34;http网络攻击&#34;&gt;
+    &lt;a href=&#34;#http%e7%bd%91%e7%bb%9c%e6%94%bb%e5%87%bb&#34;&gt;#&lt;/a&gt;
+    HTTP网络攻击
+&lt;/h2&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

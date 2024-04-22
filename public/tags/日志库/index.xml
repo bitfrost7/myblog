@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>日志库 on 些许风霜</title>
+        <link>https://bitfrost7.github.io/tags/%E6%97%A5%E5%BF%97%E5%BA%93/</link>
+        <description>Recent content in 日志库 on 些许风霜</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>bitfrost</copyright>
+        <lastBuildDate>Mon, 15 Apr 2024 13:57:43 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/tags/%E6%97%A5%E5%BF%97%E5%BA%93/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Golang学习-zap日志库</title>
+        <link>https://bitfrost7.github.io/p/golang/libs/zap/</link>
+        <pubDate>Mon, 15 Apr 2024 13:57:43 +0800</pubDate>
+        
+        <guid>https://bitfrost7.github.io/p/golang/libs/zap/</guid>
+        <description>&lt;h2 id=&#34;zap介绍&#34;&gt;
+    &lt;a href=&#34;#zap%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
+    Zap介绍
+&lt;/h2&gt;&lt;p&gt;zap 是 uber 开源的一个高性能，结构化，分级记录的日志记录包。&lt;/p&gt;
+&lt;h3 id=&#34;特性&#34;&gt;
+    &lt;a href=&#34;#%e7%89%b9%e6%80%a7&#34;&gt;#&lt;/a&gt;
+    特性
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;高性能：zap 对日志输出进行了多项优化以提高它的性能&lt;/li&gt;
+&lt;li&gt;日志分级：有 Debug，Info，Warn，Error，DPanic，Panic，Fatal 等&lt;/li&gt;
+&lt;li&gt;日志记录结构化：日志内容记录是结构化的，比如 json 格式输出&lt;/li&gt;
+&lt;li&gt;自定义格式：用户可以自定义输出的日志格式&lt;/li&gt;
+&lt;li&gt;自定义公共字段：用户可以自定义公共字段，大家输出的日志内容就共同拥有了这些字段&lt;/li&gt;
+&lt;li&gt;调试：可以打印文件名、函数名、行号、日志时间等，便于调试程序&lt;/li&gt;
+&lt;li&gt;自定义调用栈级别：可以根据日志级别输出它的调用栈信息&lt;/li&gt;
+&lt;li&gt;Namespace：日志命名空间。定义命名空间后，所有日志内容就在这个命名空间下。命名空间相当于一个文件夹&lt;/li&gt;
+&lt;li&gt;支持 hook 操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;安装&#34;&gt;
+    &lt;a href=&#34;#%e5%ae%89%e8%a3%85&#34;&gt;#&lt;/a&gt;
+    安装
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;go get -u go.uber.org/zap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

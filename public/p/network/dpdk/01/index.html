@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="dpdk学习01—环境搭建">
+<title>dpdk学习01—环境搭建</title>
+
+<link rel='canonical' href='https://bitfrost7.github.io/p/network/dpdk/01/'>
+
+<link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="dpdk学习01—环境搭建">
+<meta property='og:description' content="dpdk学习01—环境搭建">
+<meta property='og:url' content='https://bitfrost7.github.io/p/network/dpdk/01/'>
+<meta property='og:site_name' content='些许风霜'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='dpdk' /><meta property='article:published_time' content='2024-04-22T19:16:59&#43;08:00'/><meta property='article:modified_time' content='2024-04-22T19:16:59&#43;08:00'/>
+<meta name="twitter:title" content="dpdk学习01—环境搭建">
+<meta name="twitter:description" content="dpdk学习01—环境搭建">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hufd5c571a782e04bce0a763d0626e600a_146403_300x0_resize_box_3.png" width="300"
+                            height="296" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">些许风霜</a></h1>
+            <h2 class="site-description">不过如此.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a
+                        href='https://github.com/bitfrost7'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#什么是dpdk">什么是dpdk？</a>
+      <ol>
+        <li><a href="#dpdk安装">dpdk安装</a></li>
+        <li><a href="#配置环境">配置环境</a></li>
+      </ol>
+    </li>
+    <li><a href="#第一个测试程序">第一个测试程序</a></li>
+    <li><a href="#安装pktgen">安装pktgen</a></li>
+    <li><a href="#开始测试">开始测试</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/network/dpdk/01/">dpdk学习01—环境搭建</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            dpdk学习01—环境搭建
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 22, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 5 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="什么是dpdk">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%afdpdk">#</a>
+    什么是dpdk？
+</h2><p>dpdk是intel开源的一个网络加速工具包，目的是在IA平台上解决高性能网络数据包处理的问题。<br>
+传统网络包处理的过程是：</p>
+<ol>
+<li>网卡收到数据包</li>
+<li>网卡将帧DMA到内存</li>
+<li>网卡发送硬中断</li>
+<li>cpu响应中断，调用对应函数进行收包</li>
+<li>将ring buffer保存到skb</li>
+<li>内核协议栈处理帧</li>
+<li>用户进程处理报文</li>
+</ol>
+<p>因为传统网络包处理是中断驱动的，所以在大量网络请求下会出现irq风暴，降低处理性能。除此之外还涉及到多次用户态和内核态数据拷贝，降低性能。当时流行的做法是通过硬件来加速网络包处理，但是dpdk的产生证明了通用化硬件在软件极致优化的情况下也能做到达到io的极限。
+基于IA处理器的DPDK技术，很好地解决高性能数据包处理的问题，这些技术包括：</p>
+<ul>
+<li>通过轮询来处理数据包，避免中断上下文切换的开销</li>
+<li>使用用户态驱动，避免内核态到用户态不必要的内存拷贝和系统调用</li>
+<li>设置cpu亲和性与独占，避免线程在不同核心间频繁切换; 限制某些核心不参与Linux系统调试, 可使线程独占该核心</li>
+<li>利用大页内存降低TLB miss</li>
+</ul>
+<h3 id="dpdk安装">
+    <a href="#dpdk%e5%ae%89%e8%a3%85">#</a>
+    dpdk安装
+</h3><p>环境：Mac m1，Vmware Fusion 虚拟机，Ubuntu 20.04<br>
+版本：dpdk 22.11.4<br>
+因为ubuntu已经有了dpdk的二进制源，直接安装即可，如果需要二进制安装，可参考<a class="link" href="https://core.dpdk.org/doc/quick-start/"  target="_blank" rel="noopener"
+    >官方文档</a>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install -yq dpdk dpdk-dev dpdk-doc gcc g++
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="配置环境">
+    <a href="#%e9%85%8d%e7%bd%ae%e7%8e%af%e5%a2%83">#</a>
+    配置环境
+</h3><p>dpdk环境最好配置2张网卡，一个选择桥接，用来配置dpdk开发；一个选择NAT，用来和宿主机连接。cpu选择4核，内存选择8G，按宿主机资源即可。
+配置dpdk环境需要2步：</p>
+<ol>
+<li>将网卡和dpdk绑定</li>
+<li>设置内存大页
+dpdk安装时已经自带了工具，可以很方便的配置：<br>
+<code>dpdk-devbind.py dpdk-hugepages.py</code>
+以下给出自己写的配置脚本：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@ubuntu:~# cat scripts/dpdk-run.sh
+</span></span><span class="line"><span class="cl"><span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># var</span>
+</span></span><span class="line"><span class="cl"><span class="nv">down_nics</span><span class="o">=()</span>
+</span></span><span class="line"><span class="cl"><span class="nv">choice</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">selected_nics</span><span class="o">=()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查并输出DOWN状态的网络接口</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> find_down_nics <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    ip a <span class="p">|</span> grep <span class="s1">&#39;ens.*DOWN&#39;</span> <span class="p">|</span> awk -F: <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> tr -d <span class="s1">&#39; &#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">down_nics</span><span class="o">=(</span><span class="k">$(</span>find_down_nics<span class="k">)</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查是否有DOWN的接口</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;没有找到DOWN状态的网络接口。&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 打印选项</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;请选择DOWN的网络接口：&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span>i+1<span class="k">))</span><span class="s2">. </span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span> <span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span> <span class="o">+</span> <span class="m">1</span> <span class="k">))</span><span class="s2">. all&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 读取用户选择</span>
+</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;请输入选项编号： &#34;</span> choice
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;</span><span class="k">$((</span> <span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span> <span class="o">+</span> <span class="m">1</span> <span class="k">))</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;您选择了所有DOWN的网络接口。&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">selected_nics</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^<span class="o">[</span>0-9<span class="o">]</span>+$ <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span> -le <span class="s2">&#34;</span><span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;您选择了接口：</span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[</span><span class="k">$((</span>choice-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">selected_nics</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[</span><span class="k">$((</span>choice-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;无效的选择。&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># log选定的接口信息（包括IP地址）</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> log_selected_nics <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 确保bind.log存在</span>
+</span></span><span class="line"><span class="cl">    &gt; bind.log
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 尝试获取MAC地址</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">mac_address</span><span class="o">=</span><span class="k">$(</span>ip link show <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span> <span class="p">|</span>  awk  <span class="s1">&#39;/link/ {print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$mac_address</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">mac_address</span><span class="o">=</span><span class="s2">&#34;无法获取&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 尝试获取IPv4地址</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">ip_address</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span> <span class="p">|</span> grep -oP <span class="s1">&#39;(?&lt;=inet\s)\d+(\.\d+){3}/\d+&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$ip_address</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">ip_address</span><span class="o">=</span><span class="s2">&#34;未分配&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 将接口名、MAC地址和IP地址写入文件</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;绑定接口名称: </span><span class="nv">$nic</span><span class="s2">, MAC地址: </span><span class="nv">$mac_address</span><span class="s2">, IP地址: </span><span class="nv">$ip_address</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;绑定接口名称: </span><span class="nv">$nic</span><span class="s2">, MAC地址: </span><span class="nv">$mac_address</span><span class="s2">, IP地址: </span><span class="nv">$ip_address</span><span class="s2">&#34;</span> &gt;&gt; bind.log
+</span></span><span class="line"><span class="cl">    <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">log_selected_nics
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将选定的网络接口绑定到dpdk</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> bind_dpdk_nics <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 检查接口是否存在并尝试绑定</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> ip link show <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;正在绑定接口 </span><span class="nv">$nic</span><span class="s2"> 到 vfio-pci...&#34;</span>
+</span></span><span class="line"><span class="cl">            sudo dpdk-devbind.py --bind<span class="o">=</span>vfio-pci <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;接口 </span><span class="nv">$nic</span><span class="s2"> 绑定成功。&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;绑定接口 </span><span class="nv">$nic</span><span class="s2"> 失败，请检查错误。&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;接口 </span><span class="nv">$nic</span><span class="s2"> 不存在，跳过绑定。&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行绑定操作</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span> -gt <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    bind_dpdk_nics
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;没有接口被选中进行绑定。&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 配置大页</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> setup_huge_pages <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 示例命令配置2GB的1G大页</span>
+</span></span><span class="line"><span class="cl">    sudo dpdk-hugepages.py -p 1G --setup 2G
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;大页配置成功。&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;配置大页失败，请检查错误。&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 在执行完网络接口绑定之后，配置大页</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;开始配置大页...&#34;</span>
+</span></span><span class="line"><span class="cl">setup_huge_pages
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">printf</span> <span class="s2">&#34;dpdk 配置完成\n&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="第一个测试程序">
+    <a href="#%e7%ac%ac%e4%b8%80%e4%b8%aa%e6%b5%8b%e8%af%95%e7%a8%8b%e5%ba%8f">#</a>
+    第一个测试程序
+</h2><p>测试程序使用dpdk官方提供的testpmd，测试dpdk网卡绑定 。<br>
+因为网卡绑定到dpdk后无法查看ip和mac，所以绑定前需要保留这些信息，如果是运行脚本搭建，相关信息就在bind.log里。<br>
+测试环境： 两台虚拟机，要求都已经安装了dpdk的环境。</p>
+<h2 id="安装pktgen">
+    <a href="#%e5%ae%89%e8%a3%85pktgen">#</a>
+    安装pktgen
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone git://dpdk.org/apps/pktgen-dpdk
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> pktgen-dpdk/
+</span></span><span class="line"><span class="cl">meson build
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> build
+</span></span><span class="line"><span class="cl">ninja
+</span></span><span class="line"><span class="cl"><span class="c1"># app/pktgen 编译出的程序</span>
+</span></span><span class="line"><span class="cl">mv app/pktgen /usr/local/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="开始测试">
+    <a href="#%e5%bc%80%e5%a7%8b%e6%b5%8b%e8%af%95">#</a>
+    开始测试
+</h2><p>node1  node2 mac信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">node1
+</span></span><span class="line"><span class="cl">绑定接口名称: ens161, MAC地址: 00:0c:29:a5:21:1e, IP地址: 未分配
+</span></span><span class="line"><span class="cl">绑定接口名称: ens256, MAC地址: 00:0c:29:a5:21:14, IP地址: 未分配
+</span></span><span class="line"><span class="cl">node2
+</span></span><span class="line"><span class="cl">绑定接口名称: ens161, MAC地址: 00:0c:29:57:f0:2f, IP地址: 未分配
+</span></span><span class="line"><span class="cl">绑定接口名称: ens256, MAC地址: 00:0c:29:57:f0:25, IP地址: 未分配
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>在node1 上运行testpmd：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dpdk-testpmd -l 0-1 -n <span class="m">1</span> -- -i
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>将网卡设为只读模式、非混杂模式(这样就只收pktgen发来的包)后开始收包</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">set</span> fwd rxonly
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> promisc all off
+</span></span><span class="line"><span class="cl">show  port stats all
+</span></span><span class="line"><span class="cl">start
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>在node2 运行pktgen 进行发包</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pktgen -l 0-1 -n <span class="m">3</span> -- -P -m <span class="s2">&#34;[1].0&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>设置目的mac，发送100个包</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">set</span> <span class="m">0</span> dst mac 00:0c:29:a5:21:1e
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> <span class="m">0</span> count <span class="m">100</span>
+</span></span><span class="line"><span class="cl">start <span class="m">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在node1上执行<code> show port stats all</code>,此时可以发现其中一张网卡多了6400，pktgen发包默认大小64字节。
+执行<code>quit</code>退出
+测试符合预期，环境搭建完成。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/dpdk/">Dpdk</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/network/dpdk/02/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">dpdk学习02-运行helloworld</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2024 bitfrost
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
