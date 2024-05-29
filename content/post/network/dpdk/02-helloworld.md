@@ -2,7 +2,7 @@
 title: dpdk学习02-运行helloworld
 slug: /network/dpdk/02
 description: 从dpdk最简单的程序helloworld来分析dpdk的开发流程
-date: 2024-04-22T20:38:14+08:00
+date: 2024-04-03
 lastmod: 2024-04-22T20:38:14+08:00
 draft: false
 toc: true
@@ -87,11 +87,12 @@ int main(int argc, char **argv)
 ```
 代码中关键在于：
 - rte_eal_init();
-这个函数初始化dpdk EAL环境抽象层，开发必调函数。
+这个函数初始化dpdk EAL环境抽象层，必须存在的函数。
 - RTE_LCORE_FOREACH_SLAVE();
-实际上是一个for循环的宏，遍历所有的可用slave核。
+实际上是一个for循环的宏，遍历所有的可用slave核，需要传入一个循环变量lcore_id。
 - rte_eal_remote_launch();
 这个函数实际上就是让指定的slave核去执行函数，有些类似Golang中的go关键字。
+第一个参数是f，执行的函数，这个函数接受一个`void*` 指针，返回一个int，第二个参数是`void *`，是回调函数的参数，第三个参数是运行函数的逻辑核id。
 - rte_eal_mp_wait_lcore();
 这个函数实际上就是等待所有核上的任务执行完成。类似go中的waitgroup。
 
@@ -150,4 +151,4 @@ clean:
 	test -d build && rmdir -p build || true
 ```
 ### 开发环境搭建
-vscode + 远程开发remote-ssh插件
+clion+远程运行
