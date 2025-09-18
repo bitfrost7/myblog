@@ -2,39 +2,38 @@ name: Deploy Hugo to GitHub Pages
 
 on:
   push:
-    branches:
-      - master  # 当向 myblog 仓库的 master 分支推送代码时触发
+    branches: [ "master" ]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout code (with submodules)
+        uses: actions/checkout@v4.1.1
         with:
-          submodules: recursive  # 重要！确保拉取子模块主题
+          submodules: recursive
           fetch-depth: 0
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v2.7.0
         with:
-          hugo-version: 'latest'
-          extended: true         # 使用扩展版 Hugo（多数主题需要）
+          hugo-version: '0.124.1' # 修正为您的实际版本 0.124.1
+          extended: true
 
-      - name: Build with Hugo
-        run: |
-          hugo --minify --verbose
+      - name: Build
+        run: hugo --minify
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         with:
-          # 这是最关键的部分：
-          deploy_key: ${{ secrets.DEPLOY_KEY }} # 使用部署密钥
-          external_repository: bitfrost7/bitfrost7.github.io # 你的静态文件仓库
-          publish_dir: ./public                  # Hugo 生成的静态文件目录
-          publish_branch: master                 # 部署到静态仓库的 master 分支
-          keep_files: false                      # 部署前清理目标分支
-          commit_message: ${{ github.event.head_commit.message }} # 沿用提交信息
+          external_repository: bitfrost7/bitfrost7.github.io
+          publish_branch: master
+          publish_dir: ./public
+          keep_files: false
+          commit_message: ${{ github.event.head_commit.message }}
