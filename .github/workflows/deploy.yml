@@ -19,9 +19,9 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2.7.0
+        uses: peaceiris/actions-hugo@v2.6.0
         with:
-          hugo-version: '0.124.1' # 修正为您的实际版本 0.124.1
+          hugo-version: '0.124.1'
           extended: true
 
       - name: Build
