@@ -3,24 +3,22 @@ name: Deploy Hugo to GitHub Pages
 on:
   push:
     branches: [ "master" ]
-  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: false
 
     steps:
-      - name: Checkout code (with submodules)
-        uses: actions/checkout@v4.1.1
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2.6.0
+        uses: peaceiris/actions-hugo@v3.0.0
         with:
           hugo-version: '0.124.1'
           extended: true
@@ -28,11 +26,10 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3.9.3
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           external_repository: bitfrost7/bitfrost7.github.io
           publish_branch: master
           publish_dir: ./public
