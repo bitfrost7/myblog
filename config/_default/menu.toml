@@ -16,15 +16,6 @@ url = "https://github.com/bitfrost7"
 icon = "brand-github"
 
 [[social]]
-identifier = "mail"
-name = "Email"
-url = "mailto:zhq15591017398@gmail.com"
-
-[social.params]
-icon = "brand-mail"
-
-
-[[social]]
 identifier = "bilibibli"
 name = "Bilibili"
 url = "https://space.bilibili.com/250535370"

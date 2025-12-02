@@ -1,0 +1,30 @@
+---
+title: "计算机网络-HTTP协议"
+slug: "/network/http"
+description: "介绍http协议"
+date: 2024-04-18T14:50:50+08:00
+lastmod: 2024-04-18T14:50:50+08:00
+draft: false
+toc: true
+weight: false
+image: ""
+categories: ["计算机网络"]
+tags: ["HTTP"]
+---
+# HTTP协议
+## 什么是HTTP？
+### 持续连接
+### 非持续连接
+### HTTP报文格式
+#### 请求报文
+- 请求行
+- 请求头
+#### 响应报文
+- 状态行和状态码
+- 首部行
+## HTTP发展
+## HTTPS加密
+## Cookie和Session
+## WEB缓存代理和HTTP网关
+## 基于HTTP补充的协议
+## HTTP网络攻击
