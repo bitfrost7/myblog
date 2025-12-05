@@ -1,0 +1,267 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="在学习正式dpdk之前，需要了解一些dpdk相关概念以及dpdk中遇到的C语言语法方便阅读代码。"><title>dpdk学习00—预备知识</title><link rel=canonical href=https://bitfrost7.git.io/p/network/dpdk/00/><link rel=stylesheet href=/scss/style.min.b0e76e98cdd4f7082d1fc36f7af7e0843a81201db2197c03ca426751dc923735.css><meta property='og:title' content="dpdk学习00—预备知识"><meta property='og:description' content="在学习正式dpdk之前，需要了解一些dpdk相关概念以及dpdk中遇到的C语言语法方便阅读代码。"><meta property='og:url' content='https://bitfrost7.git.io/p/network/dpdk/00/'><meta property='og:site_name' content='些许风霜'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='dpdk'><meta property='article:published_time' content='2024-04-01T00:00:00+00:00'><meta property='article:modified_time' content='2024-04-25T02:05:59+08:00'><meta name=twitter:title content="dpdk学习00—预备知识"><meta name=twitter:description content="在学习正式dpdk之前，需要了解一些dpdk相关概念以及dpdk中遇到的C语言语法方便阅读代码。"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_f5475abeb30f0dfa.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>些许风霜</a></h1><h2 class=site-description>不过些许风霜罢了.</h2></div></header><ol class=menu-social><li><a href=https://space.bilibili.com/250535370 target=_blank title=Bilibili rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 014-4h10a4 4 0 014 4v6a4 4 0 01-4 4H7a4 4 0 01-4-4v-6z"/><path d="M8 3l2 3"/><path d="M16 3l-2 3"/><path d="M9 13v-2"/><path d="M15 11v2"/></svg></a></li><li><a href=https://github.com/bitfrost7 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#认识dpdk>认识dpdk</a><ol><li><a href=#什么是dpdk>什么是dpdk？</a></li><li><a href=#dpdk框架的由来>dpdk框架的由来</a></li><li><a href=#dpdk的优势和现状>dpdk的优势和现状</a></li><li><a href=#dpdk的核心组件>dpdk的核心组件</a></li></ol></li><li><a href=#相关术语介绍>相关术语介绍</a></li><li><a href=#前置c语言语法>前置C语言语法</a><ol><li><a href=#必须理解的c语言技巧>必须理解的C语言技巧</a><ol><li><a href=#容器宏>容器宏</a></li><li><a href=#分支预测优化>分支预测优化</a></li><li><a href=#位操作宏>位操作宏</a></li><li><a href=#内存屏障>内存屏障</a></li><li><a href=#原子操作>原子操作</a></li></ol></li><li><a href=#dpdk里常见编码模式>DPDK里常见编码模式</a><ol><li><a href=#内联函数模式>内联函数模式</a></li><li><a href=#函数指针表模式>函数指针表模式</a></li><li><a href=#配置结构体模式>配置结构体模式</a></li></ol></li><li><a href=#必须知道的头文件>必须知道的头文件</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/>计算机网络
+</a><a href=/categories/dpdk/>DPDK</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/network/dpdk/00/>dpdk学习00—预备知识</a></h2><h3 class=article-subtitle>在学习正式dpdk之前，需要了解一些dpdk相关概念以及dpdk中遇到的C语言语法方便阅读代码。</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2024-04-01T00:00:00Z>Apr 01, 2024</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 6 分钟</time></div></footer></div></header><section class=article-content><h2 id=认识dpdk>认识dpdk</h2><h3 id=什么是dpdk>什么是dpdk？</h3><p>dpdk是intel开源的一个网络加速工具包，目的是在IA平台上解决高性能网络数据包处理的问题。<br>传统网络包处理的过程是：</p><ol><li>网卡收到数据包</li><li>网卡将帧DMA到内存</li><li>网卡发送硬中断</li><li>cpu响应中断，调用对应函数进行收包</li><li>将ring buffer保存到skb</li><li>内核协议栈处理帧</li><li>用户进程处理报文</li></ol><p>因为传统网络包处理是中断驱动的，所以在大量网络请求下会出现irq风暴，降低处理性能。除此之外还涉及到多次用户态和内核态数据拷贝，降低性能。当时流行的做法是通过硬件来加速网络包处理，但是dpdk的产生证明了通用化硬件在软件极致优化的情况下也能做到达到io的极限。
+基于IA处理器的DPDK技术，很好地解决高性能数据包处理的问题，这些技术包括：</p><ul><li>通过轮询来处理数据包，避免中断上下文切换的开销</li><li>使用用户态驱动，避免内核态到用户态不必要的内存拷贝和系统调用</li><li>设置cpu亲和性与独占，避免线程在不同核心间频繁切换; 限制某些核心不参与Linux系统调试, 可使线程独占该核心</li><li>利用大页内存降低TLB miss</li></ul><h3 id=dpdk框架的由来>dpdk框架的由来</h3><p>由于传统包处理任务存在内核态与用户态的切换，以及多次的内存拷贝，系统消耗变大，以CPU为核心的系统存在很大的处理瓶颈。为了提升在通用服务器（COTS）的数据包处理效能，Intel推出了服务于IA（Intel Architecture）系统的DPDK技术。</p><p>DPDK是Data Plane Development Kit的缩写。简单说，DPDK应用程序运行在操作系统的User Space，利用自身提供的数据面库进行收发包处理，绕过了Linux内核态协议栈，以提升报文处理效率。</p><h3 id=dpdk的优势和现状>dpdk的优势和现状</h3><ol><li>零拷贝架构</li><li>轮询模式 vs 中断模式</li><li>NUMA感知的内存管理</li></ol><h3 id=dpdk的核心组件>dpdk的核心组件</h3><ul><li>EAL 环境抽象层，EAL是DPDK的基石，提供硬件和操作系统的抽象。完成以下工作：<ul><li>rte_memory，内存管理（大页、NUMA）</li><li>rte_pci，rte_bus。PCIe 设备发现和绑定</li><li>rte_lcore，核心和拓扑发现</li><li>rte_timer，定时器和告警设置</li></ul></li><li>内存管理组件，高性能数据包处理的内存基础设施：<ul><li>Mbuf（内存缓冲区）：数据包的核心容器，支持链式存储、零拷贝、硬件卸载元数据</li><li>Mempool（内存池）：预分配的对象池，消除运行时内存分配开销</li><li>内存分配器：NUMA 感知的内存分配，支持对齐分配</li></ul></li><li>网络设备组件，用户态网络驱动和硬件抽象：<ul><li>PMD（轮询模式驱动）：绕过内核，直接操作网卡硬件</li><li>设备管理 API：端口配置、队列管理、统计收集</li><li>Flow API（流分类）：硬件加速的流规则匹配和动作执行</li></ul></li><li>无锁数据结构，多核心并行处理的同步原语：<ul><li>Ring（环形队列）：无锁生产者-消费者队列，支持批量操作</li><li>Hash（哈希表）：无锁哈希表，用于路由表、会话表</li><li>其他结构：栈、布隆过滤器、LPM（最长前缀匹配）</li></ul></li><li>定时调度，高性能的事件和定时管理：<ul><li>定时器系统：纳秒精度定时器，支持单次和周期性任务</li><li>事件驱动框架（Eventdev）：任务调度、负载均衡、优先级队列</li><li>工作队列：任务分发和执行框架
+还有安全加密，QoS控制等组件，后续文章再说</li></ul></li></ul><h2 id=相关术语介绍>相关术语介绍</h2><ul><li>ACL：Access Control List，访问控制列表，是路由器和交换机接口的指令列表，用来控制端口进出的数据包；简而言之就是用来控制数据流。</li><li>SSL：Secure Sockets Layer，安全套接层，是为网络通信提供安全及数据完整性的一种安全协议，在传输层对网络连接进行加密。</li><li>RSS：Receive Side Scaling，是一种能够在多处理器系统下使接收报文在多个CPU之间高效分发的网卡驱动技术。</li><li>NUMA：Non Uniform Memory Access Architecture，非统一内存访问架构；</li><li>QOS：Quality of Service，服务质量，指一个网络能够利用各种基础技术，为指定的网络通信提供更好的服务能力, 是网络的一种安全机制， 是用来解决网络延迟和阻塞等问题的一种技术。</li><li>NIC：Network Interface Card，网卡，网卡是局域网中最基本的部件之一，它是连接计算机与网络的硬件设备。</li><li>PCI：Peripheral Component Interconnect，计算机一种标准总线，NIC就是使用的这种总线方式。 　　PMD：Poll Mode Drive，轮询模式驱动，DPDK就是采用的这种模式。</li><li>RTE：Run Time Environment，通过PMD实现快速分组处理数据的一个框架。</li><li>MPLS：Multi-Protocol Label Switching，多协议标签交换，是一种用于快速数据包交换和路由的体系，它为网络数据流量提供了目标、路由地址、转发和交换等能力。更特殊的是，它具有管理各种不同形式通信流的机制。</li></ul><h2 id=前置c语言语法>前置C语言语法</h2><h3 id=必须理解的c语言技巧>必须理解的C语言技巧</h3><h4 id=容器宏>容器宏</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// 获取结构体成员的偏移量
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define offsetof(TYPE, MEMBER) ((size_t) &amp;((TYPE *)0)-&gt;MEMBER)
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 通过成员指针获取包含它的结构体指针（DPDK核心技巧！）
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define container_of(ptr, type, member) ({ \
+</span></span></span><span class=line><span class=cl><span class=cp>    const typeof(((type *)0)-&gt;member) *__mptr = (ptr); \
+</span></span></span><span class=line><span class=cl><span class=cp>    (type *)((char *)__mptr - offsetof(type, member)); })
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 使用示例：
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>struct</span> <span class=n>my_struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>value</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=n>rte_mbuf</span> <span class=n>mbuf</span><span class=p>;</span>  <span class=c1>// 内嵌成员
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 已知 mbuf 指针，找到包含它的 my_struct
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>struct</span> <span class=n>rte_mbuf</span> <span class=o>*</span><span class=n>mbuf_ptr</span> <span class=o>=</span> <span class=p>...;</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=n>my_struct</span> <span class=o>*</span><span class=n>parent</span> <span class=o>=</span> <span class=nf>container_of</span><span class=p>(</span><span class=n>mbuf_ptr</span><span class=p>,</span> <span class=k>struct</span> <span class=n>my_struct</span><span class=p>,</span> <span class=n>mbuf</span><span class=p>);</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=分支预测优化>分支预测优化</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_branch_prediction.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 告诉编译器哪个分支更可能发生
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>if</span> <span class=p>(</span><span class=nf>likely</span><span class=p>(</span><span class=n>x</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>))</span> <span class=p>{</span>   <span class=c1>// 这个分支大概率发生
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// 快速路径
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span> <span class=k>else</span> <span class=p>{</span>                <span class=c1>// 这个分支很少发生
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// 慢速路径
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 实际定义：
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define likely(x)   __builtin_expect(!!(x), 1)
+</span></span></span><span class=line><span class=cl><span class=cp>#define unlikely(x) __builtin_expect(!!(x), 0)
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=位操作宏>位操作宏</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// 常用位操作
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define RTE_BIT32(pos) (1U &lt;&lt; (pos))
+</span></span></span><span class=line><span class=cl><span class=cp>#define RTE_BIT64(pos) (1ULL &lt;&lt; (pos))
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 位域操作
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define RTE_FLAG_SET(var, flag)  ((var) |= (flag))
+</span></span></span><span class=line><span class=cl><span class=cp>#define RTE_FLAG_CLEAR(var, flag) ((var) &amp;= ~(flag))
+</span></span></span><span class=line><span class=cl><span class=cp>#define RTE_FLAG_ISSET(var, flag) (((var) &amp; (flag)) != 0)
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 对齐操作
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define RTE_ALIGN_FLOOR(val, align) ((val) &amp; ~((align) - 1))
+</span></span></span><span class=line><span class=cl><span class=cp>#define RTE_ALIGN_CEIL(val, align)  RTE_ALIGN_FLOOR((val) + (align) - 1, align)
+</span></span></span><span class=line><span class=cl><span class=cp>#define RTE_ALIGN(val, align)       RTE_ALIGN_CEIL(val, align)
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=内存屏障>内存屏障</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_atomic.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 编译器屏障（阻止重排序）
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define rte_compiler_barrier() do { asm volatile(&#34;&#34; ::: &#34;memory&#34;); } while(0)
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 读写屏障
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define rte_smp_rmb() rte_compiler_barrier()  </span><span class=c1>// 读内存屏障
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define rte_smp_wmb() rte_compiler_barrier()  </span><span class=c1>// 写内存屏障
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#define rte_smp_mb()  rte_compiler_barrier()  </span><span class=c1>// 全内存屏障
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>// 使用示例（无锁编程中必须！）
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nl>producer</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=nf>prepare_data</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=nf>rte_smp_wmb</span><span class=p>();</span>          <span class=c1>// 确保数据先写入
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>flag</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>               <span class=c1>// 再设置标志
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=nl>consumer</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=o>!</span><span class=n>flag</span><span class=p>)</span> <span class=p>;</span>         <span class=c1>// 等待标志
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nf>rte_smp_rmb</span><span class=p>();</span>          <span class=c1>// 确保先读到标志
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nf>use_data</span><span class=p>(</span><span class=n>data</span><span class=p>);</span>         <span class=c1>// 再使用数据
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=原子操作>原子操作</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// DPDK 原子操作封装
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>static</span> <span class=kr>inline</span> <span class=kt>void</span> <span class=nf>rte_atomic16_init</span><span class=p>(</span><span class=kt>rte_atomic16_t</span> <span class=o>*</span><span class=n>v</span><span class=p>,</span> <span class=kt>int16_t</span> <span class=n>val</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=kt>int16_t</span> <span class=nf>rte_atomic16_read</span><span class=p>(</span><span class=k>const</span> <span class=kt>rte_atomic16_t</span> <span class=o>*</span><span class=n>v</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=kt>void</span> <span class=nf>rte_atomic16_set</span><span class=p>(</span><span class=kt>rte_atomic16_t</span> <span class=o>*</span><span class=n>v</span><span class=p>,</span> <span class=kt>int16_t</span> <span class=n>new_value</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=kt>void</span> <span class=nf>rte_atomic16_add</span><span class=p>(</span><span class=kt>rte_atomic16_t</span> <span class=o>*</span><span class=n>v</span><span class=p>,</span> <span class=kt>int16_t</span> <span class=n>inc</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=kt>void</span> <span class=nf>rte_atomic16_sub</span><span class=p>(</span><span class=kt>rte_atomic16_t</span> <span class=o>*</span><span class=n>v</span><span class=p>,</span> <span class=kt>int16_t</span> <span class=n>dec</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>static</span> <span class=kr>inline</span> <span class=kt>int16_t</span> <span class=nf>rte_atomic16_add_return</span><span class=p>(</span><span class=kt>rte_atomic16_t</span> <span class=o>*</span><span class=n>v</span><span class=p>,</span> <span class=kt>int16_t</span> <span class=n>inc</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 64位版本类似：rte_atomic64_*
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=dpdk里常见编码模式>DPDK里常见编码模式</h3><h4 id=内联函数模式>内联函数模式</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// DPDK 大量使用 static inline 提升性能
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>static</span> <span class=kr>inline</span> <span class=kt>uint16_t</span>
+</span></span><span class=line><span class=cl><span class=nf>rte_eth_rx_burst</span><span class=p>(</span><span class=kt>uint16_t</span> <span class=n>port_id</span><span class=p>,</span> <span class=kt>uint16_t</span> <span class=n>queue_id</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=k>struct</span> <span class=n>rte_mbuf</span> <span class=o>**</span><span class=n>rx_pkts</span><span class=p>,</span> <span class=k>const</span> <span class=kt>uint16_t</span> <span class=n>nb_pkts</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 简单封装，可能被编译器内联展开
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=p>(</span><span class=o>*</span><span class=n>rte_eth_devices</span><span class=p>[</span><span class=n>port_id</span><span class=p>].</span><span class=n>rx_pkt_burst</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=n>rte_eth_devices</span><span class=p>[</span><span class=n>port_id</span><span class=p>].</span><span class=n>data</span><span class=o>-&gt;</span><span class=n>rx_queues</span><span class=p>[</span><span class=n>queue_id</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>         <span class=n>rx_pkts</span><span class=p>,</span> <span class=n>nb_pkts</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=函数指针表模式>函数指针表模式</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// 驱动架构：通过函数指针实现多态
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>struct</span> <span class=n>rte_eth_dev_ops</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=p>(</span><span class=o>*</span><span class=n>dev_start</span><span class=p>)(</span><span class=k>struct</span> <span class=n>rte_eth_dev</span> <span class=o>*</span><span class=n>dev</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>void</span> <span class=p>(</span><span class=o>*</span><span class=n>dev_stop</span><span class=p>)(</span><span class=k>struct</span> <span class=n>rte_eth_dev</span> <span class=o>*</span><span class=n>dev</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=p>(</span><span class=o>*</span><span class=n>dev_configure</span><span class=p>)(</span><span class=k>struct</span> <span class=n>rte_eth_dev</span> <span class=o>*</span><span class=n>dev</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// ... 几十个操作函数
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 使用时：
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>dev</span><span class=o>-&gt;</span><span class=n>dev_ops</span><span class=o>-&gt;</span><span class=nf>dev_start</span><span class=p>(</span><span class=n>dev</span><span class=p>);</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=配置结构体模式>配置结构体模式</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// 零初始化 + 按需设置
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>struct</span> <span class=n>rte_eth_conf</span> <span class=n>port_conf</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>rxmode</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>mtu</span> <span class=o>=</span> <span class=mi>9000</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>max_rx_pkt_len</span> <span class=o>=</span> <span class=mi>9000</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>txmode</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>offloads</span> <span class=o>=</span> <span class=n>DEV_TX_OFFLOAD_MBUF_FAST_FREE</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>rx_adv_conf</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>rss_conf</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=n>rss_key</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=n>rss_hf</span> <span class=o>=</span> <span class=n>ETH_RSS_IP</span> <span class=o>|</span> <span class=n>ETH_RSS_TCP</span> <span class=o>|</span> <span class=n>ETH_RSS_UDP</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=必须知道的头文件>必须知道的头文件</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// 核心头文件
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#include</span> <span class=cpf>&lt;rte_eal.h&gt;            // EAL 初始化</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_mbuf.h&gt;           // Mbuf 操作</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_mempool.h&gt;        // 内存池</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_ethdev.h&gt;         // 网卡设备</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_ring.h&gt;           // 无锁队列</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_hash.h&gt;           // 哈希表</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_lpm.h&gt;            // LPM 路由</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 工具头文件
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>#include</span> <span class=cpf>&lt;rte_log.h&gt;            // 日志系统</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_debug.h&gt;          // 调试宏</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_common.h&gt;         // 通用宏</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_branch_prediction.h&gt; // 分支预测</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;rte_malloc.h&gt;         // 动态内存</span><span class=cp>
+</span></span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/dpdk/>Dpdk</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>最后更新于 Apr 25, 2024 02:05 +0800</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/network/dpdk/02/><div class=article-details><h2 class=article-title>dpdk学习02-运行helloworld</h2></div></a></article><article><a href=/p/network/dpdk/03/><div class=article-details><h2 class=article-title>dpdk学习03-cmdline源码解读</h2></div></a></article><article><a href=/p/network/dpdk/01/><div class=article-details><h2 class=article-title>dpdk学习01—环境搭建</h2></div></a></article><article><a href=/p/network/dns/><div class=article-details><h2 class=article-title>计算机网络-DNS协议</h2></div></a></article><article><a href=/p/network/http/><div class=article-details><h2 class=article-title>计算机网络-HTTP协议</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//hugo-theme-stack.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2021 -
+2025 些许风霜</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.32.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

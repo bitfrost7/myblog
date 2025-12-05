@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>日志库 on 些许风霜</title><link>https://bitfrost7.git.io/tags/%E6%97%A5%E5%BF%97%E5%BA%93/</link><description>Recent content in 日志库 on 些许风霜</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 15 Apr 2024 13:57:43 +0800</lastBuildDate><atom:link href="https://bitfrost7.git.io/tags/%E6%97%A5%E5%BF%97%E5%BA%93/index.xml" rel="self" type="application/rss+xml"/><item><title>Golang学习-zap日志库</title><link>https://bitfrost7.git.io/p/golang/libs/zap/</link><pubDate>Mon, 15 Apr 2024 13:57:43 +0800</pubDate><guid>https://bitfrost7.git.io/p/golang/libs/zap/</guid><description>&lt;h2 id="zap介绍"&gt;Zap介绍
+&lt;/h2&gt;&lt;p&gt;zap 是 uber 开源的一个高性能，结构化，分级记录的日志记录包。&lt;/p&gt;
+&lt;h3 id="特性"&gt;特性
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;高性能：zap 对日志输出进行了多项优化以提高它的性能&lt;/li&gt;
+&lt;li&gt;日志分级：有 Debug，Info，Warn，Error，DPanic，Panic，Fatal 等&lt;/li&gt;
+&lt;li&gt;日志记录结构化：日志内容记录是结构化的，比如 json 格式输出&lt;/li&gt;
+&lt;li&gt;自定义格式：用户可以自定义输出的日志格式&lt;/li&gt;
+&lt;li&gt;自定义公共字段：用户可以自定义公共字段，大家输出的日志内容就共同拥有了这些字段&lt;/li&gt;
+&lt;li&gt;调试：可以打印文件名、函数名、行号、日志时间等，便于调试程序&lt;/li&gt;
+&lt;li&gt;自定义调用栈级别：可以根据日志级别输出它的调用栈信息&lt;/li&gt;
+&lt;li&gt;Namespace：日志命名空间。定义命名空间后，所有日志内容就在这个命名空间下。命名空间相当于一个文件夹&lt;/li&gt;
+&lt;li&gt;支持 hook 操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="安装"&gt;安装
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;go get -u go.uber.org/zap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="使用"&gt;使用
+&lt;/h3&gt;</description></item></channel></rss>

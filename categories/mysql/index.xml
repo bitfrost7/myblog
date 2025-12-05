@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mysql on 些许风霜</title><link>https://bitfrost7.git.io/categories/mysql/</link><description>Recent content in Mysql on 些许风霜</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 19 Sep 2025 14:17:29 +0800</lastBuildDate><atom:link href="https://bitfrost7.git.io/categories/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>MySql学习-索引</title><link>https://bitfrost7.git.io/p/mysql/</link><pubDate>Fri, 19 Sep 2025 14:17:29 +0800</pubDate><guid>https://bitfrost7.git.io/p/mysql/</guid><description>&lt;h2 id="索引介绍"&gt;索引介绍
+&lt;/h2&gt;&lt;p&gt;索引是一个单独的、存储在磁盘上的数据库结构，它们包含着对数据表里所有记录的引用指针。
+使用索引用于快速找出在某个或多个列中有一特定值的行，所有MySQL列类型都可以被索引，对相关列使用索引是提高查询操作速度的最佳途径。
+索引虽然能起到加速查询的作用，但是也要认识到加索引会导致DML的速度变慢。&lt;/p&gt;
+&lt;h3 id="索引的类别"&gt;索引的类别
+&lt;/h3&gt;&lt;h3 id="索引的实现原理"&gt;索引的实现原理
+&lt;/h3&gt;&lt;h2 id="使用索引"&gt;使用索引
+&lt;/h2&gt;&lt;h3 id="创建索引"&gt;创建索引
+&lt;/h3&gt;&lt;h3 id="索引优化"&gt;索引优化
+&lt;/h3&gt;</description></item></channel></rss>

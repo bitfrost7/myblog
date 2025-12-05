@@ -1,0 +1,448 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="介绍Go标准库中的容器"><title>Golang学习-container库</title><link rel=canonical href=https://bitfrost7.git.io/p/golang/container/><link rel=stylesheet href=/scss/style.min.b0e76e98cdd4f7082d1fc36f7af7e0843a81201db2197c03ca426751dc923735.css><meta property='og:title' content="Golang学习-container库"><meta property='og:description' content="介绍Go标准库中的容器"><meta property='og:url' content='https://bitfrost7.git.io/p/golang/container/'><meta property='og:site_name' content='些许风霜'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='golang'><meta property='article:published_time' content='2024-03-29T22:04:44+08:00'><meta property='article:modified_time' content='2024-03-29T22:04:44+08:00'><meta name=twitter:title content="Golang学习-container库"><meta name=twitter:description content="介绍Go标准库中的容器"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_f5475abeb30f0dfa.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>些许风霜</a></h1><h2 class=site-description>不过些许风霜罢了.</h2></div></header><ol class=menu-social><li><a href=https://space.bilibili.com/250535370 target=_blank title=Bilibili rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 014-4h10a4 4 0 014 4v6a4 4 0 01-4 4H7a4 4 0 01-4-4v-6z"/><path d="M8 3l2 3"/><path d="M16 3l-2 3"/><path d="M9 13v-2"/><path d="M15 11v2"/></svg></a></li><li><a href=https://github.com/bitfrost7 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#list>List</a><ol><li><a href=#list常用api>List常用api</a></li></ol></li><li><a href=#heap>Heap</a><ol><li><a href=#接口定义>接口定义</a></li><li><a href=#提供函数>提供函数</a></li><li><a href=#使用heap实现一个优先级队列>使用heap实现一个优先级队列</a></li></ol></li><li><a href=#ring>Ring</a><ol><li><a href=#提供函数-1>提供函数</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>编程语言</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/golang/container/>Golang学习-container库</a></h2><h3 class=article-subtitle>介绍Go标准库中的容器</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2024-03-29T22:04:44+08:00>Mar 29, 2024</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 5 分钟</time></div></footer></div></header><section class=article-content><h1 id=标准库容器>标准库容器</h1><p>Go语言中有一个 <code>container</code> 包，提供了三种常用的数据结构：<code>list</code>双向链表，<code>heap</code>堆，<code>ring</code>环</p><h2 id=list>List</h2><p>链表是一种常见的数据结构，它由节点组成，每个节点包含一个数据元素和一个指向下一个节点的指针。链表的优点是在插入和删除操作时非常高效 <code>O(1)</code>，而在访问时效率较低 <code>O(n)</code>。链表有单向链表、双向链表和循环链表等多种类型，链表还有许多变种，如哈希链表、跳表等。
+在Go中<code>cotainer/list</code> 实现了双向链表。
+数据结构如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Go data-lang=Go><span class=line><span class=cl><span class=kd>type</span><span class=w> </span><span class=nx>Element</span><span class=w> </span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nx>next</span><span class=p>,</span><span class=w> </span><span class=nx>prev</span><span class=w> </span><span class=o>*</span><span class=nx>Element</span><span class=w> 
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nx>list</span><span class=w> </span><span class=o>*</span><span class=nx>List</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nx>Value</span><span class=w> </span><span class=kt>any</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>type</span><span class=w> </span><span class=nx>List</span><span class=w> </span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nx>root</span><span class=w> </span><span class=nx>Element</span><span class=w> </span><span class=c1>// sentinel list element, only &amp;root, root.prev, and root.next are used</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nx>len</span><span class=w>  </span><span class=kt>int</span><span class=w>     </span><span class=c1>// current list length excluding (this) sentinel element</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>链表头尾节点使用了哨兵节点，方便删除和插入。</p><h3 id=list常用api>List常用api</h3><div class=table-wrapper><table><thead><tr><th>名称</th><th>函数参数</th><th>作用</th></tr></thead><tbody><tr><td>New</td><td>无</td><td>new一个list返回</td></tr><tr><td>Front</td><td>无</td><td>返回头节点</td></tr><tr><td>Back</td><td>无</td><td>返回尾节点</td></tr><tr><td>Remove</td><td>element</td><td>移除节点</td></tr><tr><td>PushFront</td><td>value any</td><td>头部添加元素</td></tr><tr><td>PushBack</td><td>value any</td><td>尾部添加元素</td></tr><tr><td>InsertBefore</td><td>value any , mark element</td><td>在mark后添加元素</td></tr><tr><td>MoveToFront</td><td>e element</td><td>移动节点到头部</td></tr><tr><td>PushBackList</td><td>other *list</td><td>将另一个列表添加进去</td></tr></tbody></table></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 遍历一个链表
+</span></span><span class=line><span class=cl>for e := a.Front(); e != nil; e = e.Next() {
+</span></span><span class=line><span class=cl>    fmt.Println(e.Value)
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=heap>Heap</h2><p>Go语言<code>container</code>包中， heap 为所有实现了 <code>heap.Interface</code> 的类型提供了堆操作。</p><blockquote><p>堆，其实是一个优先级队列，这个队列里按照优先级排，优先级高的在堆顶，优先级低的在堆底。
+一个堆是一个完全二叉树，树中不存在气泡，是连续存储的，所以可以直接由数组实现。</p></blockquote><p>Golang中的堆是最小堆，父节点的值总是小于子节点的值，所以root节点的值最小。</p><h3 id=接口定义>接口定义</h3><p>Go中要使用<code>heap</code>，必须实现<code>heap.Interface</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>type</span><span class=w> </span><span class=nx>Interface</span><span class=w> </span><span class=kd>interface</span><span class=w> </span><span class=p>{</span><span class=w> 
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>sort</span><span class=p>.</span><span class=nx>Interface</span><span class=w> 
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nf>Push</span><span class=p>(</span><span class=nx>x</span><span class=w> </span><span class=kt>any</span><span class=p>)</span><span class=w> </span><span class=c1>// add x as element Len()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nf>Pop</span><span class=p>()</span><span class=w> </span><span class=kt>any</span><span class=w> </span><span class=c1>// remove and return element Len() - 1. </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>除了实现<code>pop</code>和<code>push</code>之外 还需要实现<code>sort</code>接口。</p><h3 id=提供函数>提供函数</h3><p><code>heap</code>接口提供了几个堆操作的函数：</p><ul><li><strong>Init</strong> 用于在使用堆之前对堆进行初始化。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>Init</span><span class=p>(</span><span class=nx>h</span><span class=w> </span><span class=nx>Interface</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// heapify  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Len</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>n</span><span class=o>/</span><span class=mi>2</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>&gt;=</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=o>--</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nf>down</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=p>,</span><span class=w> </span><span class=nx>n</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><strong>Pop/Push</strong> 用于弹出或者推入元素</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// Push 函数将值为 x 的元素推入到堆里面，该函数的复杂度为 O(log(n)) 。</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=nf>Push</span><span class=p>(</span><span class=nx>h</span><span class=w> </span><span class=nx>Interface</span><span class=p>,</span><span class=w> </span><span class=nx>x</span><span class=w> </span><span class=kt>any</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>h</span><span class=p>.</span><span class=nf>Push</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nf>up</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Len</span><span class=p>()</span><span class=o>-</span><span class=mi>1</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// Pop 函数根据 Less 的结果， 从堆中移除并返回具有最小值的元素。</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 等同于执行 Remove(h, 0)，复杂度为 O(log(n))。（n 等于 h.Len() ）。</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=nf>Pop</span><span class=p>(</span><span class=nx>h</span><span class=w> </span><span class=nx>Interface</span><span class=p>)</span><span class=w> </span><span class=kt>any</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Len</span><span class=p>()</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>h</span><span class=p>.</span><span class=nf>Swap</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=w> </span><span class=nx>n</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nf>down</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=w> </span><span class=nx>n</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>return</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Pop</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><strong>Remove</strong> 移除元素</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>Remove</span><span class=p>(</span><span class=nx>h</span><span class=w> </span><span class=nx>Interface</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=kt>any</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Len</span><span class=p>()</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>if</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>h</span><span class=p>.</span><span class=nf>Swap</span><span class=p>(</span><span class=nx>i</span><span class=p>,</span><span class=w> </span><span class=nx>n</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>if</span><span class=w> </span><span class=p>!</span><span class=nf>down</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=p>,</span><span class=w> </span><span class=nx>n</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=nf>up</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>return</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Pop</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><strong>Fix</strong> 有时候我们会修改<code>i</code>上的值，这时需要调用<code>Fix</code>来修复元素顺序。尽管可以先删除<code>i</code>的值，再<code>push</code>，但是直接修改加<code>Fix</code>的成本会小一些。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>Fix</span><span class=p>(</span><span class=nx>h</span><span class=w> </span><span class=nx>Interface</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>if</span><span class=w> </span><span class=p>!</span><span class=nf>down</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=p>,</span><span class=w> </span><span class=nx>h</span><span class=p>.</span><span class=nf>Len</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nf>up</span><span class=p>(</span><span class=nx>h</span><span class=p>,</span><span class=w> </span><span class=nx>i</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><code>heap</code>包里还有几个关键函数:</p><ul><li><strong>up</strong> 将所给索引的元素向上调整到其正确的位置，以满足堆的性质。</li><li><strong>down</strong> 将所给索引 的元素向下调整至其子节点中合适的位置，保证堆的性质。并且返回是否下沉，即返回true表示发生了下沉，false表示未发生下沉。</li></ul><h3 id=使用heap实现一个优先级队列>使用heap实现一个优先级队列</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nx>main</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=p>(</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s>&#34;container/heap&#34;</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s>&#34;fmt&#34;</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 定义一个实现了heap.Interface的结构体  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>type</span><span class=w> </span><span class=nx>PriorityQueue</span><span class=w> </span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>items</span><span class=w> </span><span class=nx>PriorityQueueItems</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>type</span><span class=w> </span><span class=nx>PriorityQueueItem</span><span class=w> </span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>Value</span><span class=w>    </span><span class=kt>int</span><span class=w> </span><span class=c1>// 具体的值  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>Priority</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=c1>// 优先级，这里假设数值越大的优先级越高  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>index</span><span class=w>    </span><span class=kt>int</span><span class=w> </span><span class=c1>// 用于heap.Interface所需的索引  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>type</span><span class=w> </span><span class=nx>PriorityQueueItems</span><span class=w> </span><span class=p>[]</span><span class=nx>PriorityQueueItem</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 实现heap.Interface的三个方法  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=nx>PriorityQueueItems</span><span class=p>)</span><span class=w> </span><span class=nf>Len</span><span class=p>()</span><span class=w> </span><span class=kt>int</span><span class=w>           </span><span class=p>{</span><span class=w> </span><span class=k>return</span><span class=w> </span><span class=nb>len</span><span class=p>(</span><span class=nx>pq</span><span class=p>)</span><span class=w> </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=nx>PriorityQueueItems</span><span class=p>)</span><span class=w> </span><span class=nf>Less</span><span class=p>(</span><span class=nx>i</span><span class=p>,</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=kt>bool</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=k>return</span><span class=w> </span><span class=nx>pq</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>Priority</span><span class=w> </span><span class=p>&gt;</span><span class=w> </span><span class=nx>pq</span><span class=p>[</span><span class=nx>j</span><span class=p>].</span><span class=nx>Priority</span><span class=w> </span><span class=p>}</span><span class=w> </span><span class=c1>// 大顶堆  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=nx>PriorityQueueItems</span><span class=p>)</span><span class=w> </span><span class=nf>Swap</span><span class=p>(</span><span class=nx>i</span><span class=p>,</span><span class=w> </span><span class=nx>j</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w>      </span><span class=p>{</span><span class=w> </span><span class=nx>pq</span><span class=p>[</span><span class=nx>i</span><span class=p>],</span><span class=w> </span><span class=nx>pq</span><span class=p>[</span><span class=nx>j</span><span class=p>]</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>pq</span><span class=p>[</span><span class=nx>j</span><span class=p>],</span><span class=w> </span><span class=nx>pq</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span><span class=w> </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=o>*</span><span class=nx>PriorityQueueItems</span><span class=p>)</span><span class=w> </span><span class=nf>Push</span><span class=p>(</span><span class=nx>x</span><span class=w> </span><span class=kd>interface</span><span class=p>{})</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nb>len</span><span class=p>(</span><span class=o>*</span><span class=nx>pq</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>item</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>x</span><span class=p>.(</span><span class=nx>PriorityQueueItem</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>item</span><span class=p>.</span><span class=nx>index</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>n</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>*</span><span class=nx>pq</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nb>append</span><span class=p>(</span><span class=o>*</span><span class=nx>pq</span><span class=p>,</span><span class=w> </span><span class=nx>item</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=o>*</span><span class=nx>PriorityQueueItems</span><span class=p>)</span><span class=w> </span><span class=nf>Pop</span><span class=p>()</span><span class=w> </span><span class=kd>interface</span><span class=p>{}</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>old</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=o>*</span><span class=nx>pq</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nb>len</span><span class=p>(</span><span class=nx>old</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>item</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>old</span><span class=p>[</span><span class=nx>n</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>old</span><span class=p>[</span><span class=nx>n</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>PriorityQueueItem</span><span class=p>{}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=o>*</span><span class=nx>pq</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>old</span><span class=p>[</span><span class=mi>0</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=nx>n</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>item</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 优先级队列对外提供的方法  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=o>*</span><span class=nx>PriorityQueue</span><span class=p>)</span><span class=w> </span><span class=nf>Push</span><span class=p>(</span><span class=nx>value</span><span class=w> </span><span class=kt>int</span><span class=p>,</span><span class=w> </span><span class=nx>priority</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>item</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>PriorityQueueItem</span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>Value</span><span class=p>:</span><span class=w>    </span><span class=nx>value</span><span class=p>,</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>Priority</span><span class=p>:</span><span class=w> </span><span class=nx>priority</span><span class=p>,</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>heap</span><span class=p>.</span><span class=nf>Push</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>pq</span><span class=p>.</span><span class=nx>items</span><span class=p>,</span><span class=w> </span><span class=nx>item</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>pq</span><span class=w> </span><span class=o>*</span><span class=nx>PriorityQueue</span><span class=p>)</span><span class=w> </span><span class=nf>Pop</span><span class=p>()</span><span class=w> </span><span class=p>(</span><span class=nx>value</span><span class=w> </span><span class=kt>int</span><span class=p>,</span><span class=w> </span><span class=nx>ok</span><span class=w> </span><span class=kt>bool</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>pq</span><span class=p>.</span><span class=nx>items</span><span class=p>.</span><span class=nf>Len</span><span class=p>()</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=mi>0</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>return</span><span class=w> </span><span class=mi>0</span><span class=p>,</span><span class=w> </span><span class=kc>false</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>item</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>heap</span><span class=p>.</span><span class=nf>Pop</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>pq</span><span class=p>.</span><span class=nx>items</span><span class=p>).(</span><span class=nx>PriorityQueueItem</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>item</span><span class=p>.</span><span class=nx>Value</span><span class=p>,</span><span class=w> </span><span class=kc>true</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=nf>NewPriorityQueue</span><span class=p>()</span><span class=w> </span><span class=o>*</span><span class=nx>PriorityQueue</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=o>&amp;</span><span class=nx>PriorityQueue</span><span class=p>{</span><span class=nx>items</span><span class=p>:</span><span class=w> </span><span class=nb>make</span><span class=p>(</span><span class=nx>PriorityQueueItems</span><span class=p>,</span><span class=w> </span><span class=mi>0</span><span class=p>)}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>pq</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nf>NewPriorityQueue</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>pq</span><span class=p>.</span><span class=nf>Push</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>pq</span><span class=p>.</span><span class=nf>Push</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=mi>3</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>pq</span><span class=p>.</span><span class=nf>Push</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span><span class=w> </span><span class=mi>2</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=nx>pq</span><span class=p>.</span><span class=nx>items</span><span class=p>.</span><span class=nf>Len</span><span class=p>()</span><span class=w> </span><span class=p>&gt;</span><span class=w> </span><span class=mi>0</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>value</span><span class=p>,</span><span class=w> </span><span class=nx>_</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>pq</span><span class=p>.</span><span class=nf>Pop</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>value</span><span class=p>)</span><span class=w> </span><span class=c1>// 输出顺序应为：3, 2, 1  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=ring>Ring</h2><p>在 Go 语言的标准库中，<code>container/ring</code> 包提供了环形缓冲区（Ring Buffer）的实现，也称为循环队列。环形缓冲区是一种固定大小的缓冲区，其特点是当缓冲区满时，新的数据会覆盖最旧的数据，形成一个首尾相连的环状结构。这种数据结构常用于缓存最近使用的数据、限流等场景。</p><h3 id=提供函数-1>提供函数</h3><ul><li>New() 创建一个新的环形缓冲区实例，具有给定的大小。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>New</span><span class=p>(</span><span class=nx>n</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=mi>0</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>return</span><span class=w> </span><span class=kc>nil</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>r</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nb>new</span><span class=p>(</span><span class=nx>Ring</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>p</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>r</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=mi>1</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=w> </span><span class=p>&lt;</span><span class=w> </span><span class=nx>n</span><span class=p>;</span><span class=w> </span><span class=nx>i</span><span class=o>++</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>p</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=o>&amp;</span><span class=nx>Ring</span><span class=p>{</span><span class=nx>prev</span><span class=p>:</span><span class=w> </span><span class=nx>p</span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>p</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>p</span><span class=p>.</span><span class=nx>next</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>p</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>r</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>r</span><span class=p>.</span><span class=nx>prev</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>p</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Link()和Unlink()</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// LInk用于连接另一个`ring`</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Link</span><span class=p>(</span><span class=nx>s</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>Next</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>s</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>nil</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>p</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>s</span><span class=p>.</span><span class=nf>Prev</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=c1>// Note: Cannot use multiple assignment because  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=c1>// evaluation order of LHS is not specified.       r.next = s  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>s</span><span class=p>.</span><span class=nx>prev</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>r</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>n</span><span class=p>.</span><span class=nx>prev</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>p</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>p</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>n</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>n</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w> 
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// Unlink用于移除一个元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Unlink</span><span class=p>(</span><span class=nx>n</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=mi>0</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>return</span><span class=w> </span><span class=kc>nil</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>Link</span><span class=p>(</span><span class=nx>r</span><span class=p>.</span><span class=nf>Move</span><span class=p>(</span><span class=nx>n</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=p>))</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Prev() Next() Move()</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// Prev返回指向前一个元素的环形缓冲区节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Next</span><span class=p>()</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=kc>nil</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>init</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>next</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// Next返回指向下一个元素的环形缓冲区节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Prev</span><span class=p>()</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=kc>nil</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>init</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>prev</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// Move将环形缓冲区的指针移动n个位置，正数表示向前移动，负数表示向后移动</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Move</span><span class=p>(</span><span class=nx>n</span><span class=w> </span><span class=kt>int</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=kc>nil</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>init</span><span class=p>()</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>switch</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>case</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=p>&lt;</span><span class=w> </span><span class=mi>0</span><span class=p>:</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>for</span><span class=w> </span><span class=p>;</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=p>&lt;</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w> </span><span class=nx>n</span><span class=o>++</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nx>r</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>prev</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>case</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=p>&gt;</span><span class=w> </span><span class=mi>0</span><span class=p>:</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>for</span><span class=w> </span><span class=p>;</span><span class=w> </span><span class=nx>n</span><span class=w> </span><span class=p>&gt;</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w> </span><span class=nx>n</span><span class=o>--</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nx>r</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nx>next</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>r</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Len Do</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// Len 返回环形缓冲区中有效元素的数量。</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Len</span><span class=p>()</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>n</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=mi>0</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>r</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>nil</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nx>n</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=mi>1</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>for</span><span class=w> </span><span class=nx>p</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>Next</span><span class=p>();</span><span class=w> </span><span class=nx>p</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=nx>r</span><span class=p>;</span><span class=w> </span><span class=nx>p</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>p</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nx>n</span><span class=o>++</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>n</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// Do 对环形缓冲区中的每个元素执行给定的函数</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>r</span><span class=w> </span><span class=o>*</span><span class=nx>Ring</span><span class=p>)</span><span class=w> </span><span class=nf>Do</span><span class=p>(</span><span class=nx>f</span><span class=w> </span><span class=kd>func</span><span class=p>(</span><span class=kt>any</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=nx>r</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>nil</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=nf>f</span><span class=p>(</span><span class=nx>r</span><span class=p>.</span><span class=nx>Value</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=k>for</span><span class=w> </span><span class=nx>p</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>r</span><span class=p>.</span><span class=nf>Next</span><span class=p>();</span><span class=w> </span><span class=nx>p</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=nx>r</span><span class=p>;</span><span class=w> </span><span class=nx>p</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>p</span><span class=p>.</span><span class=nx>next</span><span class=w> </span><span class=p>{</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nf>f</span><span class=p>(</span><span class=nx>p</span><span class=p>.</span><span class=nx>Value</span><span class=p>)</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>       </span><span class=p>}</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/golang/>Golang</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/golang/libs/zap/><div class=article-details><h2 class=article-title>Golang学习-zap日志库</h2></div></a></article><article><a href=/p/golang/context/><div class=article-details><h2 class=article-title>Golang学习-上下文context</h2></div></a></article><article><a href=/p/golang/hashmap/><div class=article-details><h2 class=article-title>Golang学习-哈希表</h2></div></a></article><article><a href=/p/golang/string/><div class=article-details><h2 class=article-title>Golang学习-字符串</h2></div></a></article><article><a href=/p/golang/type/><div class=article-details><h2 class=article-title>Golang学习-基础数据类型</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//hugo-theme-stack.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2021 -
+2025 些许风霜</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.32.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
